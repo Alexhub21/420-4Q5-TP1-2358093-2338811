@@ -12,7 +12,25 @@ class SousReseau{
         $this.Masque=$Masque
     }
 
-    #Methode obenir adrsse
+    #Methode obtenir adresse
+[int] GetAdresse([int]$PositionHote){
+    [int]$capacite = [math]::Pow(2,(32-$this.Masque))
+ #Vérifier que PositionHote est valide
+ #$PositionHote = Get-PositionHote -PositionHote
+ if($PositionHote -le 0){
+    throw "la position doit etre superieur a 0"
+}
+if($PositionHote -ge ($capacite - 1)){
+    throw "la position depasse la plage valide"
+}
+
+}
+
+#Convertir IP réseau en entier
+
+#Ajouter PositionHote
+
+#Retourner nouvelle IP
     
 
 
