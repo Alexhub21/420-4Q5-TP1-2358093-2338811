@@ -12,77 +12,20 @@ class SousReseau{
         $this.Masque=$Masque
     }
 
-    #Methode obtenir adresse
-[int] GetAdresse([int]$PositionHote){
-    [int]$capacite = [math]::Pow(2,(32-$this.Masque))
- #Vérifier que PositionHote est valide
- #$PositionHote = Get-PositionHote -PositionHote
- if($PositionHote -le 0){
-    throw "la position doit etre superieur a 0"
-}
-if($PositionHote -ge ($capacite - 1)){
-    throw "la position depasse la plage valide"
-}
-
-}
-
-#Convertir IP réseau en entier
-
-#Ajouter PositionHote
-
-#Retourner nouvelle IP
+    #Methode obenir adresse
     
 
 
 }
-class VLSMCalculator{
+class VLSCalculator{
     [string]$AdresseDepart
-    [int]$MasqueDepart=24
+    [int]$MasqueDepart
     [int[]] $Hotes
 
     VLSCalculator([string]$AdresseDepart, [int]$MasqueDepart, [int]$Hotes){
         $this.AdresseDepart=$AdresseDepart
         $this.MasqueDepart=$MasqueDepart
         $this.Hotes=$Hotes
-    }
-    [void]ValiderEntrees(){
-        Write-Host "Validation des entrées..."
-        #
-        $ipv4Regex = '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
-        $estIPV4 = $this.AdresseDepart -match $ipv4Regex
-        #Si ce n'est pas une adresse IPv4, vérifier si c'est une adresse IPv6
-        $estIPV6 =$false
-        if (-not $estIPV4) {
-            try{
-                [void][System.Net.IPAddress]::Parse($this.AdresseDepart)
-                $estIPV6 = $true
-            }
-            catch{
-                 $estIPV6 = $false
-            }
-            
-        }
-        #Valider l'adresse IP
-        if ((-not $estIPV4 -and -not $estIPV6)) {
-            throw "Adresse IP invalide. Veuillez entrer une adresse IPv4 ou IPv6 valide: $($this.AdresseDepart)"
-           
-        }
-        #Valider le masque de sous-réseau
-        if ($this.MasqueDepart -lt 0 -or $this.MasqueDepart -gt 30) {
-            throw "Masque de sous-réseau invalide. Veuillez entrer un masque entre 0 et 30: $($this.MasqueDepart)"
-          
-        }
-        # Hotes non vide positif
-        if(null -eq $this.Hotes -or $this.Hotes.Length -eq 0){
-            throw "Veuillez fournir une liste d'hôtes valide."
-        }
-        $i=0
-        foreach($hote in $this.Hotes){
-            if($hote -le 0){
-                throw "Le nombre d'hôtes doit être un entier positif. Hôte invalide à l'index $i : $hote"
-            }
-            $i++
-        }
     }
 
     #Methode pour calculer le masque de sous reseau
