@@ -97,7 +97,7 @@ class VLSMCalculateur{
 
         $SommeAdressesTotal = $SommeAdressesTotal + $AdressesTotales
 
-         Write-Debug "Validation: Hôtes=$NbHote , MasqueFin= $MasqueFin , TotalAdresses= $AdressesTotales , Somme= $SommeAdressesTotal" 
+         Write-Debug "Validation: Hôtes :$NbHote , MasqueFin : $MasqueFin , TotalAdresses : $AdressesTotales , Somme : $SommeAdressesTotal" 
 
             $i++
     }
@@ -114,10 +114,28 @@ class VLSMCalculateur{
    
     
     #Methode pour calculer le masque de sous reseau
-  # [int] GetMasque([int]$Hotes){
-   #     $bitsHotes = [math]::Ceiling([math]::Log($Hotes + 2, 2))
-        #$masqueSousReseau = 32 - $bitsHotes
-     #   return $masqueSousReseau
-   # }
+   [int] GetMasque([int]$Hotes){
 
+    write-Debug "Calcul du masque pour $Hotes hôtes"
+
+    if($Hotes -le 0){
+        throw "Le nombre d'hôtes doit être supérieur à 0"
+    }
+
+       $bitsHotes = [math]::Ceiling([math]::Log($Hotes + 2, 2))
+        $masqueSousReseau = 32 - $bitsHotes
+
+       
+     Write-Debug "Nombre de bits pour les hôtes: $bitsHotes, Masque de sous-réseau: $masqueSousReseau"
+      
+        if ($masqueSousReseau -lt 0 -or $masqueSousReseau -gt 30) {
+            throw "Masque de sous-réseau invalide : $masqueSousReseau"
+        }
+        if ($masqueSousReseau -lt $this.MasqueDepart) {
+            throw "Masque de sous-réseau  dépasse le réseau : $masqueSousReseau"
+        }
+        return $masqueSousReseau
+
+    
+    }
 }
