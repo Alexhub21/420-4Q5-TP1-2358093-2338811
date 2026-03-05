@@ -116,9 +116,6 @@ class VLSMCalculateur{
     #Methode pour calculer le masque de sous reseau
    [int] GetMasque([int]$Hotes){
 
-<<<<<<< HEAD
-}
-=======
     write-Debug "Calcul du masque pour $Hotes hôtes"
 
     if($Hotes -le 0){
@@ -142,4 +139,4 @@ class VLSMCalculateur{
     
     }
 }
->>>>>>> e5c82e37ad5a3822dd3ad84110133676b9a3c9d0
+
